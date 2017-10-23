@@ -47,7 +47,7 @@ Will reset and remove all containers.. you'll be starting with a blank slate aga
 Now, to run many instances of miners and regular nodes:
 
 ```
-docker-compose up --scale grin-miner=5 grin-validator=20 -d
+docker-compose up --scale grin-miner=5 --scale grin-validator=20 -d
 ```
 for example.
 
