@@ -1,4 +1,4 @@
-#Grin Docker images
+# Grin Docker images
 
 (Internal developer documentation for now)
 
