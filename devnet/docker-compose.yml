@@ -15,17 +15,17 @@ services:
     networks:
       testnet:
         ipv4_address: 172.25.0.2
+    depends_on:
+      - grin-genesis-wallet
 
   grin-genesis-wallet:
     image: grin-min
-    command: ["wallet", "-p", "\"password\"", "receive"]
+    command: ["wallet", "-p", "password", "receive"]
     expose:
       - "13416"
     networks:
       testnet:
         ipv4_address: 172.25.0.3
-    depends_on:
-      - grin-genesis-miner
 
 
   #Node 2: Regular node (not mining)
@@ -56,7 +56,7 @@ services:
 
   grin-regular-2-wallet:
     image: grin-min
-    command: ["wallet", "-p", "\"password\"", "receive"]
+    command: ["wallet", "-p", "password", "-a", "http://grin-genesis-miner:13413", "receive"]
     expose:
       - "13416"
     networks:

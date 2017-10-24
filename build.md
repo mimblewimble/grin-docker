@@ -4,7 +4,8 @@
 
 ## Basic usage
 
-Install docker, docker-compose. Be in this directory.
+Install docker, docker-compose. Be in this directory with the approriate docker-compose.yml file
+e.g devnet/ testnet/
 
 To build the base image:
 ```
