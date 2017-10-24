@@ -1,0 +1,73 @@
+version: '3.3'
+services:
+  #Node 1: genesis and miner from build.md example
+  grin-genesis-miner:
+    build:
+      context: ..
+      dockerfile: base-build/Dockerfile
+    image: grin-min
+    command: ["server", "--mine", "-w", "http://grin-genesis-wallet:13416", "run"]
+    environment:
+      - RUST_BACKTRACE=1
+    expose:
+      - "13414"
+      - "13415"
+    networks:
+      testnet:
+        ipv4_address: 172.25.0.2
+
+  grin-genesis-wallet:
+    image: grin-min
+    command: ["wallet", "-p", "\"password\"", "receive"]
+    expose:
+      - "13416"
+    networks:
+      testnet:
+        ipv4_address: 172.25.0.3
+    depends_on:
+      - grin-genesis-miner
+
+
+  #Node 2: Regular node (not mining)
+  grin-regular-1:
+    image: grin-min
+    environment:
+      - RUST_BACKTRACE=1
+    command: ["server", "-s", "172.25.0.2:13414", "run"]
+    expose:
+      - "13414"
+      - "13415"
+    depends_on:
+      - grin-genesis-miner
+    networks:
+      testnet:
+        ipv4_address: 172.25.0.4
+
+  #Node 3: regular node and wallet listener
+  grin-regular-2:
+    image: grin-min
+    command: ["server", "-s", "172.25.0.2:13414", "run"]
+    depends_on:
+      - grin-regular-2-wallet
+      - grin-genesis-miner
+    networks:
+      testnet:
+        ipv4_address: 172.25.0.5
+
+  grin-regular-2-wallet:
+    image: grin-min
+    command: ["wallet", "-p", "\"password\"", "receive"]
+    expose:
+      - "13416"
+    networks:
+      testnet:
+        ipv4_address: 172.25.0.6
+    depends_on:
+      - grin-genesis-miner
+
+networks:
+  testnet:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.25.0.0/24
