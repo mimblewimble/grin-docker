@@ -19,7 +19,8 @@ services:
   #wallet-miner pairs
   grin-wallet:
     image: grin-min
-    command: ["wallet", "-p", "\"password\"", "receive"]
+    entrypoint: bash -c "grin wallet init; grin wallet -p \"password\" receive"
+    # command: ["wallet", "-p", "\"password\"", "receive"]
     expose:
       - "13416"
     networks:
@@ -40,7 +41,7 @@ services:
     image: grin-min
     environment:
       - RUST_BACKTRACE=1
-    command: ["server", "-s", "172.25.0.2:13414", "run"]
+    command: ["server", "-s", "172.25.0.2:13414", "-w", "http://grin-wallet:13416", "run"]
     expose:
       - "13414"
       - "13415"
