@@ -19,7 +19,7 @@ services:
   #wallet-miner pairs
   grin-wallet:
     image: grin-min
-    command: ["wallet", "-p", "\"password\"", "receive"]
+    command: ["wallet", "-p", "password", "receive"]
     expose:
       - "13416"
     networks:
