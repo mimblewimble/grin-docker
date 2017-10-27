@@ -33,7 +33,7 @@ services:
     image: grin-min
     environment:
       - RUST_BACKTRACE=1
-    command: ["server", "-s", "172.25.0.2:13414", "run"]
+    command: ["server", "--seed=172.25.0.2:13414", "run"]
     expose:
       - "13414"
       - "13415"
@@ -46,7 +46,7 @@ services:
   #Node 3: regular node and wallet listener
   grin-regular-2:
     image: grin-min
-    command: ["server", "-s", "172.25.0.2:13414", "run"]
+    command: ["server", "--seed=172.25.0.2:13414", "run"]
     depends_on:
       - grin-regular-2-wallet
       - grin-genesis-miner

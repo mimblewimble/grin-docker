@@ -28,7 +28,7 @@ services:
       - grin-genesis
   grin-miner:
     image: grin-min
-    command: ["server", "--mine", "-s", "172.25.0.2:13414", "-w", "http://grin-wallet:13416", "run"]
+    command: ["server", "--mine", "--seed=172.25.0.2:13414", "-w", "http://grin-wallet:13416", "run"]
     depends_on:
       - grin-wallet
       - grin-genesis
@@ -40,7 +40,7 @@ services:
     image: grin-min
     environment:
       - RUST_BACKTRACE=1
-    command: ["server", "-s", "172.25.0.2:13414", "run"]
+    command: ["server", "--seed=172.25.0.2:13414", "run"]
     expose:
       - "13414"
       - "13415"
