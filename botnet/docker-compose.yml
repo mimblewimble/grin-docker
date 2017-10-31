@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   #All nodes have same basic build, but can be controlled externally
-  grin-node:
+  grin-bot-node:
     build:
       context: ..
       dockerfile: base-build/Dockerfile.botnet

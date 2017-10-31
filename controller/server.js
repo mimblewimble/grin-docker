@@ -139,7 +139,7 @@ dispatcher.onError(function(req, res) {
 });
 
 // Start the server !
-grinControlServer.listen(PORT, function(){
+grinControlServer.listen(PORT, '0.0.0.0', function(){
 	// Callback triggered when server is successfully listening. Hurray!
-	console.log('Control server listening on: http://localhost:%s', PORT);
+	console.log('Control server listening on: http://' + grinControlServer.address().address + ':' + PORT);
 });
