@@ -10,8 +10,8 @@ services:
     environment:
       - RUST_BACKTRACE=1
     expose:
+      - "13413"
       - "13414"
-      - "13415"
     networks:
       testnet:
         ipv4_address: 172.25.0.2
@@ -42,8 +42,8 @@ services:
       - RUST_BACKTRACE=1
     command: ["server", "--seed=172.25.0.2:13414", "run"]
     expose:
+      - "13413"
       - "13414"
-      - "13415"
     depends_on:
       - grin-genesis
     networks:

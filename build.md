@@ -19,7 +19,7 @@ To run (attached to terminal)
 docker-compose up
 ```
 
-This will start networks, containers using the images, and log everything to the consolw
+This will start networks, containers using the images, and log everything to the console.
 
 To run detached:
 ```
@@ -54,12 +54,12 @@ for example.
 
 ## other handy commands
 
-execute and atach to a shell inside a partiuclar container as root
+Execute and attach to a shell inside a particular container as root:
 ```
 docker exec -u 0 -it grindocker_grin-wallet_1 /bin/bash
 ```
 
-delete all images (to rebuild from scratch)
+Delete all images (to rebuild from scratch):
 ```
 docker rmi $(docker images -q)
 ```

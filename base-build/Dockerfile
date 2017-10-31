@@ -23,6 +23,7 @@ FROM debian:stretch
 MAINTAINER yeastplume version:0.1
 COPY --from=grin_build /usr/src/grin/target/debug/grin /usr/bin/grin
 COPY --from=grin_build /usr/src/grin/target/debug/plugins/ /usr/lib/grin/plugins
+RUN apt-get update && apt-get -y install curl
 RUN useradd -m grinuser
 COPY --from=grin_build /usr/src/grin/grin.toml /home/grinuser/.grin/grin.toml
 RUN sed -i 's/.*cuckoo_miner_plugin_dir.*/cuckoo_miner_plugin_dir = "\/usr\/lib\/grin\/plugins"/g' /home/grinuser/.grin/grin.toml \
