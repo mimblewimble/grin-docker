@@ -30,7 +30,7 @@ To start, POST via curl as follows
 curl -X POST -d @sample_start.json 172.26.0.2:8000/start
 ```
 
-Check parameter values in (sample_start.json) [sample_start.json]. You can choose to run either a wallet server,
+Check parameter values in [sample_start.json](sample_start.json). You can choose to run either a wallet server,
 a regular server or both on the same instance.
 
 To stop running servers:
