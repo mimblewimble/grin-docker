@@ -1,0 +1,23 @@
+version: '3.3'
+services:
+  #All nodes have same basic build, try controlling externally
+  grin-node:
+    build:
+      context: ..
+      dockerfile: base-build/Dockerfile
+    image: grin-min
+    environment:
+      - RUST_BACKTRACE=1
+    expose:
+      - "13413"
+      - "13414"
+      - "8080"
+    networks:
+      testnet:
+
+networks:
+  testnet:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.25.0.0/24
