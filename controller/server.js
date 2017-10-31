@@ -1,13 +1,16 @@
 var HttpDispatcher = require('httpdispatcher');
 var http           = require('http');
 var dispatcher     = new HttpDispatcher();
-var shell          = require('shelljs');
+const { spawn }    = require('child_process');
 
 // define the port of access for the server
-const PORT = 8080;
+const PORT = 8000;
+const GRIN_CMD = 'grin';
+//const GRIN_CMD = '../../grin/target/debug/grin';
 
 // global handle for the running grin instance
-var grin_process;
+var server_process;
+var wallet_process;
 
 // We need a function which handles requests and send response
 function handleRequest(request, response){
@@ -33,7 +36,8 @@ var CommandResult = function(){
 
 var GrinStatus = function(){
 	return {
-		status: 'stopped',
+		server_process: 'stopped',
+		wallet_process: 'stopped'
 	};
 };
 
@@ -46,11 +50,16 @@ var GrinStatus = function(){
 });*/
 
 var killGrin = function(){
-	if (grin_process!=null){
-		grin_process.kill('SIGTERM');
-		console.log('Grin process killed');
+	if (server_process!=null){
+		server_process.kill('SIGINT');
+		console.log('SIGINT sent to grin server process');
 	}
-	grin_process=null;
+	if (wallet_process!=null){
+		wallet_process.kill('SIGINT');
+		console.log('SIGINT sent to grin wallet process');
+	}
+	server_process=null;
+	wallet_process=null;
 };
 
 var sendResponse = function(res, result){
@@ -58,39 +67,54 @@ var sendResponse = function(res, result){
 	res.end(JSON.stringify(result));
 };
 
-dispatcher.onGet('/start', function(req, res) {
+dispatcher.onPost('/start', function(req, res) {
 	killGrin();
-	grin_process = shell.exec('grin server run', {async:true});
-	grin_process.stdout.on('data', function(data) {
-		console.log(data);
-	});
-	grin_process.on('exit', function(data) {
-		console.log('Exited with exit code: '+data);
-		killGrin();
-	});
-	var result = CommandResult();
-	result.command='start normal';
-	result.result='issued';
-	sendResponse(res, result);
+	try {
+		var args=JSON.parse(req.body);
+		if (args.runserver){
+			console.log('Starting server');
+			args.serverargs.unshift('server');
+			server_process = spawn(GRIN_CMD, args.serverargs);
+			server_process.stdout.on('data', function(data) {
+				console.log(data);
+			});
+			server_process.on('exit', function(code) {
+				console.log('Server Exited with exit code: '+code);
+				server_process=null;
+			});
+			server_process.on('error', function(err){
+				console.log(err);
+			});
+		}
+		if (args.runwallet){
+			console.log('Starting wallet');
+			args.walletargs.unshift('wallet');
+			wallet_process = spawn(GRIN_CMD, args.walletargs, {cwd: './wallet'});
+			wallet_process.stdout.on('data', function(data) {
+				console.log(data);
+			});
+			wallet_process.on('exit', function(code) {
+				console.log('Wallet exited with exit code: '+code);
+				server_process=null;
+			});
+			wallet_process.on('error', function(err){
+				console.log(err);
+			});
+		}
+		var result = CommandResult();
+		result.command='start';
+		result.result='issued';
+		sendResponse(res, result);
+	} catch (err){
+		var result_err = CommandResult();
+		result_err.command='start';
+		result_err.result='error';
+		sendResponse(res, result_err);
+		console.log(err);
+	}
 });
 
-dispatcher.onGet('/start-miner', function(req, res) {
-	killGrin();
-	grin_process = shell.exec('grin server --mine run', {async:true});
-	grin_process.stdout.on('data', function(data) {
-		console.log(data);
-	});
-	grin_process.on('exit', function(data) {
-		console.log('Exited with exit code: '+data);
-		killGrin();
-	});
-	var result = CommandResult();
-	result.command='start miner';
-	result.result='issued';
-	sendResponse(res, result);
-});
-
-dispatcher.onGet('/stop', function(req, res) {
+dispatcher.onPost('/stop', function(req, res) {
 	killGrin();
 	var result = CommandResult();
 	result.command='stop grin';
@@ -100,8 +124,11 @@ dispatcher.onGet('/stop', function(req, res) {
 
 dispatcher.onGet('/status', function(req, res) {
 	var result = GrinStatus();
-	if (grin_process!=null&&grin_process.exit_code==null){
-		result.status='running';
+	if (server_process!=null&&server_process.exit_code==null){
+		result.server_process='running';
+	}
+	if (wallet_process!=null&&wallet_process.exit_code==null){
+		result.wallet_process='running';
 	}
 	sendResponse(res, result);
 });

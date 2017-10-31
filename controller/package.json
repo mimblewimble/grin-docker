@@ -9,11 +9,8 @@
   },
   "author": "yeastplume",
   "license": "MIT",
-  "devDependencies": {
-    "eslint-config-google": "^0.9.1"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "httpdispatcher": "^2.1.1",
-    "shelljs": "^0.7.8"
+    "httpdispatcher": "^2.1.1"
   }
 }

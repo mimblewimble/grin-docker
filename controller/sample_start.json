@@ -1,0 +1,6 @@
+{
+  "runserver": true,
+  "runwallet": true,
+  "serverargs": ["--mine", "run"],
+  "walletargs": ["-p", "password", "receive"]
+}

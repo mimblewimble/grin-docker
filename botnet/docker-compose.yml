@@ -1,11 +1,11 @@
 version: '3.3'
 services:
-  #All nodes have same basic build, try controlling externally
+  #All nodes have same basic build, but can be controlled externally
   grin-node:
     build:
       context: ..
-      dockerfile: base-build/Dockerfile
-    image: grin-min
+      dockerfile: base-build/Dockerfile.botnet
+    image: grin-bot
     environment:
       - RUST_BACKTRACE=1
     expose:
@@ -13,11 +13,11 @@ services:
       - "13414"
       - "8080"
     networks:
-      testnet:
+      botnet:
 
 networks:
-  testnet:
+  botnet:
     driver: bridge
     ipam:
       config:
-      - subnet: 172.25.0.0/24
+      - subnet: 172.26.0.0/24
