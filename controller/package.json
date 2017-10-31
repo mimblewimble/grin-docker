@@ -1,0 +1,15 @@
+{
+  "name": "controller",
+  "version": "0.1.0",
+  "description": "Controller to allow for external processes to control the grin server instance running on docker containers",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "author": "yeastplume",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-google": "^0.9.1"
+  }
+}

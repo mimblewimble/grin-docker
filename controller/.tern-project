@@ -1,0 +1,13 @@
+{
+  "libs": [
+  ],
+  "loadEagerly": [
+    "server.js"
+  ],
+  "plugins": {
+    "requirejs": {
+      "baseURL": "./",
+      "paths": {}
+    }
+  }
+}
