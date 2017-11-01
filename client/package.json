@@ -1,0 +1,16 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "description": "test client",
+  "main": "client.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node client.js"
+  },
+  "author": "yeastplume",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "request": "^2.83.0"
+  }
+}
