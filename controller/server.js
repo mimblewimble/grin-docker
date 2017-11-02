@@ -11,6 +11,7 @@ const GRIN_CMD = 'grin';
 // global handle for the running grin instance
 var server_process;
 var wallet_process;
+var send_process;
 
 // We need a function which handles requests and send response
 function handleRequest(request, response){
@@ -41,14 +42,6 @@ var GrinStatus = function(){
 	};
 };
 
-// add some routes
-
-//A sample GET request
-/*dispatcher.onGet('/', function(req, res) {
-	res.writeHead(200, {'Content-Type': 'text/html'});
-	res.end('<h1>Hey, this is the homepage of your server</h1>');
-});*/
-
 var killGrin = function(){
 	if (server_process!=null){
 		server_process.kill('SIGINT');
@@ -74,9 +67,15 @@ dispatcher.onPost('/start', function(req, res) {
 		if (args.runserver){
 			console.log('Starting server');
 			args.serverargs.unshift('server');
-			server_process = spawn(GRIN_CMD, args.serverargs);
+			server_process = spawn(GRIN_CMD, args.serverargs, {env: {RUST_BACKTRACE: '1'}});
 			server_process.stdout.on('data', function(data) {
 				console.log(data);
+			});
+			server_process.stderr.on('readable', function() {
+				var chunk;
+				while ((chunk = this.read()) !== null) {
+					console.log('%s', chunk);
+				}
 			});
 			server_process.on('exit', function(code) {
 				console.log('Server Exited with exit code: '+code);
@@ -89,9 +88,15 @@ dispatcher.onPost('/start', function(req, res) {
 		if (args.runwallet){
 			console.log('Starting wallet');
 			args.walletargs.unshift('wallet');
-			wallet_process = spawn(GRIN_CMD, args.walletargs, {cwd: './wallet'});
+			wallet_process = spawn(GRIN_CMD, args.walletargs, {cwd: './wallet', env: {RUST_BACKTRACE: '1'}});
 			wallet_process.stdout.on('data', function(data) {
 				console.log(data);
+			});
+			wallet_process.stderr.on('readable', function() {
+				var chunk;
+				while ((chunk = this.read()) !== null) {
+					console.log('%s', chunk);
+				}
 			});
 			wallet_process.on('exit', function(code) {
 				console.log('Wallet exited with exit code: '+code);
@@ -120,6 +125,42 @@ dispatcher.onPost('/stop', function(req, res) {
 	result.command='stop grin';
 	result.result='issued';
 	sendResponse(res, result);
+});
+
+dispatcher.onPost('/send', function(req, res) {
+	try {
+		var args=JSON.parse(req.body);
+		console.log('Sending Coins');
+		args.unshift('wallet');
+		console.log(args);
+		send_process = spawn(GRIN_CMD, args, {cwd: './wallet', env: {RUST_BACKTRACE: '1'}});
+		send_process.stdout.on('data', function(data) {
+			console.log(data);
+		});
+		send_process.stderr.on('readable', function() {
+			var chunk;
+			while ((chunk = this.read()) !== null) {
+				console.log('%s', chunk);
+			}
+		});
+		send_process.on('exit', function(code) {
+			console.log('Wallet send exited with exit code: '+code);
+			send_process=null;
+		});
+		send_process.on('error', function(err){
+			console.log(err);
+		});
+		var result = CommandResult();
+		result.command='send';
+		result.result='issued';
+		sendResponse(res, result);
+	} catch (err){
+		var result_err = CommandResult();
+		result_err.command='send';
+		result_err.result='error';
+		sendResponse(res, result_err);
+		console.log(err);
+	}
 });
 
 dispatcher.onGet('/status', function(req, res) {

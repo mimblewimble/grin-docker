@@ -9,6 +9,17 @@ class ServerStartParams {
 	}
 }
 
+class WalletSendParams {
+	constructor(){
+		this.amount=2000;
+		this.destination = 'http://172.128.0.2:13415';
+	}
+
+	as_grin_args(){
+		return ['-p', 'password', 'send', this.amount, '-d', this.destination];
+	}
+}
+
 class PostOptions {
 	constructor(){
 		this.url= 'http://172.26.0.2:8000/start';
@@ -24,6 +35,10 @@ class PostOptions {
 
 const serverStartParams = function(){
 	return new ServerStartParams();
+};
+
+const walletSendParams = function(){
+	return new WalletSendParams();
 };
 
 const startServer = function(ip, server_params){
@@ -53,9 +68,23 @@ const stopServer = function(ip){
 	});
 };
 
+const sendCoins = function(ip, wallet_send_params){
+	var post_options = new PostOptions();
+	post_options.url = 'http://'+ip+':8000/send';
+	post_options.body = JSON.stringify(wallet_send_params.as_grin_args());
+	return new Promise(function(resolve, reject) {
+		request(post_options, function (err, res, body) {
+			if (err) {
+				reject(Error(err));
+			}
+			resolve(body);
+		});
+	});
+};
+
 const getChainState = function(ip){
 	var post_options = new PostOptions();
-	post_options.url = 'http://'+ip+':13413/v2/chain';
+	post_options.url = 'http://'+ip+':13413/v1/chain';
 	post_options.method = 'GET';
 	return new Promise(function(resolve, reject) {
 		request(post_options, function (err, res, body) {
@@ -70,8 +99,10 @@ const getChainState = function(ip){
 module.exports = function(){
 	return {
 		serverStartParams : serverStartParams,
+		walletSendParams : walletSendParams,
 		startServer : startServer,
 		stopServer : stopServer,
+		sendCoins : sendCoins,
 		getChainState : getChainState,
 	};
 }();

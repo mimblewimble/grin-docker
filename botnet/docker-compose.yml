@@ -11,7 +11,8 @@ services:
     expose:
       - "13413"
       - "13414"
-      - "8080"
+      - "13415"
+      - "8000"
     networks:
       botnet:
 

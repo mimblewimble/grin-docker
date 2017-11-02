@@ -9,22 +9,38 @@ network where nodes are constantly running, joining, leaving, etc. as well as ch
 via grin's API commands. Additionally, it should be easy enough to build a pretty-UI on top of 
 the test net if so desired by adding a 'control' node that runs a simple control web-app.
 
+Prereqs:
+docker
+docker-compose
+node 8+
+
 Build via:
 ```
 docker-compose build
 ```
 
-And launch as many instances as you want with:
+And launch the same number of instances as match what's specified in ../client/client.js
 
 ```
-docker-compose up --scale grin-bot-node=10
+docker-compose up --scale grin-bot-node=6
 ```
 
-This won't start grin automatically on each node, just a control server which can be controlled as follows.
-The first container starts with IP 172.26.0.2 and increments each instance from there.
+This won't start grin automatically on each node, just a control server on each server, which will be accessed by the control client.
 
+Wait for the nodes to come up, then to start the network simulation, from the ../client directory:
 
-To start, POST via curl as follows
+```
+node client.js
+```
+
+This will start up the clients at intervals and start/stop them, or send transactions at intervals defined by the rules in client.js,
+as well as periodically poll, collect and compare stats from each running server via their grin APIs.
+
+To modify values or the frequency at which events have a chance of occurring, refer to the 'tweak_servers' function in client.js
+
+Other misc: (Older, just here for testing and debuggin reference)
+
+To start a server, POST via curl as follows
 
 ```
 curl -X POST -d @sample_start.json 172.26.0.2:8000/start
