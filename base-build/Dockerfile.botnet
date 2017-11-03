@@ -40,12 +40,10 @@ RUN sed -i 's/.*cuckoo_miner_plugin_dir.*/cuckoo_miner_plugin_dir = "\/usr\/lib\
      && sed -i 's/.*host.*=.*/host = "0.0.0.0"/g' /home/grinuser/.grin/grin.toml \
 #    && sed -i 's/.*mining_parameter_mode.*/mining_parameter_mode = "Production"/g' /home/grinuser/.grin/grin.toml
 && chown -R grinuser:grinuser /home/grinuser/.grin \
-&& chown -R grinuser:grinuser /home/grinuser/controller 
+&& chown -R grinuser:grinuser /home/grinuser/controller
 USER grinuser
 WORKDIR /home/grinuser/controller
 RUN npm install
-WORKDIR /home/grinuser/wallet
-RUN grin wallet init
 WORKDIR /home/grinuser
 ENTRYPOINT ["node", "controller/server.js" ]
 # forward grin logs to docker log collector on stdout

@@ -12,7 +12,7 @@ the test net if so desired by adding a 'control' node that runs a simple control
 Prereqs:
 docker
 docker-compose
-node 8+
+node 8+ (npm: request)
 
 Build via:
 ```
@@ -38,7 +38,7 @@ as well as periodically poll, collect and compare stats from each running server
 
 To modify values or the frequency at which events have a chance of occurring, refer to the 'tweak_servers' function in client.js
 
-Other misc: (Older, just here for testing and debuggin reference)
+Other misc: (Older, just here for testing and debugging reference)
 
 To start a server, POST via curl as follows
 

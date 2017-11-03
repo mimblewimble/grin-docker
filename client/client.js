@@ -128,26 +128,31 @@ function tweak_servers(){
 	server_containers[0].coin_send_chance=1;
 	server_containers[0].coin_send_amount=50000;
 	server_containers[0].coin_send_destination='http://'+server_containers[5].ip+':13415';
-	//set up another miner, also mining into a wallet, connecting to first
+
+	//set up another server, connecting to first
 	server_containers[1].start_tick = 45;
 	server_containers[1].start_params.serverargs = ['--mine', '--seed='+server_containers[0].ip+':13414', 'run'];
 	server_containers[1].break_chance=1;
-	//set up non-validating mining node, joining later, and connecting to another seed
+
+	//set up another non-mining node, joining later, and connecting to another seed
 	server_containers[2].start_tick = 120;
 	server_containers[2].start_params.runwallet = false;
 	server_containers[2].start_params.serverargs = ['--seed='+server_containers[1].ip+':13414', 'run'];
 	server_containers[2].break_chance=0.5;
 	server_containers[2].break_length=360;
-	//And another non-validating one, a bit later, connect to another seed
+
+	//And another non-mining one, a bit later, connect to another seed
 	server_containers[3].start_tick = 180;
 	server_containers[3].start_params.runwallet = false;
 	server_containers[3].start_params.serverargs = ['--seed='+server_containers[2].ip+':13414', 'run'];
+
 	//and another miner, joining later
 	server_containers[4].start_tick = 240;
 	server_containers[4].start_params.runwallet = true;
 	server_containers[4].start_params.serverargs = ['--mine', '--seed='+server_containers[1].ip+':13414', 'run']; 
 	server_containers[4].break_chance=2;
 	server_containers[4].break_length=30;
+
 	//here's a lucky wallet receiver
 	server_containers[5].start_tick=15;
 	server_containers[5].start_params.serverargs = ['--seed='+server_containers[0].ip+':13414', 'run'];

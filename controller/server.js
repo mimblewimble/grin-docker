@@ -1,7 +1,7 @@
-var HttpDispatcher = require('httpdispatcher');
-var http           = require('http');
-var dispatcher     = new HttpDispatcher();
-const { spawn }    = require('child_process');
+var HttpDispatcher  = require('httpdispatcher');
+var http            = require('http');
+var dispatcher      = new HttpDispatcher();
+const {exec, spawn} = require('child_process');
 
 // define the port of access for the server
 const PORT = 8000;
@@ -181,6 +181,8 @@ dispatcher.onError(function(req, res) {
 
 // Start the server !
 grinControlServer.listen(PORT, '0.0.0.0', function(){
+  // Init the wallet seed
+  exec(GRIN_CMD + " wallet init", {cwd: './wallet', env: {RUST_BACKTRACE: '1'}});
 	// Callback triggered when server is successfully listening. Hurray!
 	console.log('Control server listening on: http://' + grinControlServer.address().address + ':' + PORT);
 });
