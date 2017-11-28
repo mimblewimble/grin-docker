@@ -34,6 +34,7 @@ RUN sed -i 's/.*cuckoo_miner_plugin_dir.*/cuckoo_miner_plugin_dir = "\/usr\/lib\
 RUN chown -R grinuser:grinuser /home/grinuser/.grin
 USER grinuser
 WORKDIR /home/grinuser
+ENV RUST_BACKTRACE=1
 RUN grin wallet init
 ENTRYPOINT ["/usr/bin/grin"]
 # forward log to docker log collector
