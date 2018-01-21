@@ -6,7 +6,7 @@
 #use official rust docker image (debian based)
 FROM rust:1.21-stretch as grin_build
 #needs cmake, node packages (for controller)
-RUN apt-get update && apt-get -y install cmake
+RUN apt-get update && apt-get -y install cmake clang
 #checkout source fresh and build
 WORKDIR /usr/src
 RUN git clone https://github.com/mimblewimble/grin.git
