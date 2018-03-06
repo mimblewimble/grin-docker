@@ -5,7 +5,7 @@ class ServerStartParams {
 		this.runserver = true;
 		this.runwallet = true;
 		this.serverargs = ['--mine', 'run'],
-		this.walletargs = ['-p', 'password', 'receive'];
+		this.walletargs = ['-p', 'password', 'listen'];
 	}
 }
 

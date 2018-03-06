@@ -4,7 +4,7 @@
 # Base build of grin docker image
 
 #use official rust docker image (debian based)
-FROM rust:1.21-stretch as grin_build
+FROM rust:1.24-stretch as grin_build
 #needs cmake, node packages (for controller)
 RUN apt-get update && apt-get -y install cmake clang
 #checkout source fresh and build
@@ -35,7 +35,7 @@ RUN apt-get update && apt-get -y install curl \
 COPY --from=grin_build /usr/src/grin/grin.toml /home/grinuser/.grin/grin.toml
 COPY controller/*.js controller/package.json /home/grinuser/controller/
 RUN sed -i 's/.*cuckoo_miner_plugin_dir.*/cuckoo_miner_plugin_dir = "\/usr\/lib\/grin\/plugins"/g' /home/grinuser/.grin/grin.toml \
-     && sed -i 's/.*file_log_level.*/file_log_level = "Trace"/g' /home/grinuser/.grin/grin.toml \
+     && sed -i 's/.*file_log_level.*/file_log_level = "Debug"/g' /home/grinuser/.grin/grin.toml \
      && sed -i 's/.*api_http_addr.*/api_http_addr = "0.0.0.0:13413"/g' /home/grinuser/.grin/grin.toml \
      && sed -i 's/.*host.*=.*/host = "0.0.0.0"/g' /home/grinuser/.grin/grin.toml \
 #    && sed -i 's/.*mining_parameter_mode.*/mining_parameter_mode = "Production"/g' /home/grinuser/.grin/grin.toml
