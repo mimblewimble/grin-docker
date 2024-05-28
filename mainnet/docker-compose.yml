@@ -15,7 +15,7 @@ services:
       - "3413:3413"
       - "3414:3414"
     volumes:
-      - node-data-mainnet:/home/grinuser/node
+      - grin-home-mainnet:/home/grinuser
 
 volumes:
-  node-data-mainnet:
+  grin-home-mainnet:
