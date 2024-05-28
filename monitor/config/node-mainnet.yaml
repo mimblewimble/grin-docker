@@ -1,13 +1,13 @@
 actions:
   - title: Node Sync Status
     popupOnStart: execution-dialog-stdout-only
-    shell: curl -s -X POST localhost:3413/v2/owner -u grin:`cat /grin-node-home/.grin/main/.api_secret` -d @/etc/OliveTin/json-rpc/node/get_status.json
+    shell: curl -s -X POST host.docker.internal:3413/v2/owner -u grin:`cat /grin-node-home/.grin/main/.api_secret` -d @/etc/OliveTin/json-rpc/node/get_status.json
     icon: ping
     timeout: 5
 
   - title: Grin Wallet Info
     popupOnStart: execution-dialog-stdout-only
-    shell: grin-wallet -p password info
+    shell: ping localhost
 
 dashboards:
   - title: All Processes
