@@ -1,0 +1,6 @@
+{
+    "jsonrpc": "2.0",
+    "method": "get_status",
+    "params": [],
+    "id": 1
+}

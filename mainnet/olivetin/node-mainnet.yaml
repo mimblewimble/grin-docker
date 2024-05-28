@@ -1,3 +1,0 @@
-actions:
-  - title: "Hello Grin Container!"
-    shell: echo 'Hello Grin!'

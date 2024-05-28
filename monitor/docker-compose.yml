@@ -1,0 +1,13 @@
+services:
+  grin-olivetin:
+    build:
+      context: ..
+      dockerfile: base-olivetin/Dockerfile
+      target: olivetin_grin_build
+    image: grin-olivetin-mainnet 
+    volumes:
+      - ./monitor/config/node-mainnet.yaml:/etc/OliveTin/config.yaml
+      - ./monitor/json-rpc:/etc/OliveTin/json-rpc
+    ports:
+      - "1337:1337"
+    restart: unless-stopped

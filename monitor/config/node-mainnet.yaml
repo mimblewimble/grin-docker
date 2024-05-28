@@ -1,0 +1,22 @@
+actions:
+  - title: Node Sync Status
+    popupOnStart: execution-dialog-stdout-only
+    shell: curl -s -X POST localhost:3413/v2/owner -u grin:`cat /home/grinuser/.grin/main/.api_secret` -d @/home/grinuser/json-rpc/node/get_status.json
+    icon: ping
+    timeout: 5
+
+  - title: Grin Wallet Info
+    popupOnStart: execution-dialog-stdout-only
+    shell: grin-wallet -p password info
+
+dashboards:
+  - title: All Processes
+    contents:
+      - title: Grin Node
+        type: fieldset
+        contents:
+        - title: Node Sync Status
+      - type: fieldset
+        title: Grin Wallet
+        contents:
+        - title: Grin Wallet Info

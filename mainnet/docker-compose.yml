@@ -4,20 +4,18 @@ services:
     build:
       context: ..
       dockerfile: base-build/Dockerfile
+      target: grin_node_mainnet
     image: grin-node-mainnet
-    #command: ["server", "run"]
     environment:
       - RUST_BACKTRACE=1
     expose:
       - "3413"
       - "3414"
-      - "1337"
     ports:
       - "3413:3413"
       - "3414:3414"
-      - "1337:1337"
     volumes:
-      - ./olivetin/node-mainnet.yaml:/etc/OliveTin/config.yaml
-    #networks:
-    #  testnet:
-    #    ipv4_address: 172.25.0.2
+      - node-data-mainnet:/home/grinuser/node
+
+volumes:
+  node-data-mainnet:
