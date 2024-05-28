@@ -15,6 +15,7 @@ services:
       - "3413:3413"
       - "3414:3414"
     volumes:
+      - ./configs/main/grin-server.toml:/home/grinuser/.grin/main/grin-server.toml
       - grin-home-mainnet:/home/grinuser
 
 volumes:
