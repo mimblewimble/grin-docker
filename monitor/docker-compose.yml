@@ -8,11 +8,11 @@ services:
     volumes:
       - ./config/node-mainnet.yaml:/etc/OliveTin/config.yaml
       - ./json-rpc:/etc/OliveTin/json-rpc
-      - mainnet_grin-home-mainnet:/grin-node-home
+      - node_grin-home-mainnet-master:/grin-node-home
     ports:
       - "1337:1337"
     restart: unless-stopped
 
 volumes:
-  mainnet_grin-home-mainnet:
+  node_grin-home-mainnet-master:
     external: true

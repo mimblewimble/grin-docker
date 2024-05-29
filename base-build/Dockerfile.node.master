@@ -22,8 +22,8 @@ RUN cargo build --release
 #######################
 #Deploy binaries to a minimal image
 
-FROM grin_build as grin_node_mainnet
-LABEL maintainer="yeastplume" description="Minimal Grin Node"
+FROM grin_build as grin_node_master
+LABEL maintainer="yeastplume" description="Minimal Grin Node - Build from master"
 COPY --from=grin_build /usr/src/grin/target/release/grin /usr/bin/grin
 RUN useradd -m grinuser
 USER grinuser
@@ -32,5 +32,3 @@ RUN mkdir -p /home/grinuser/.grin/main
 WORKDIR /home/grinuser
 
 ENTRYPOINT ["/usr/bin/grin"]
-# forward log to docker log collector
-RUN ln -sf /dev/stdout /home/grinuser/.grin/main/grin-server.log
