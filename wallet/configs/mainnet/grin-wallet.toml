@@ -18,14 +18,14 @@ chain_type = "Mainnet"
 api_listen_port = 3415
 
 #port for wallet owner api
-owner_api_listen_port = 3420
+owner_api_listen_port = 3415
 
 #path of the secret token used by the API to authenticate the calls
 #comment it to disable basic auth
 api_secret_path = "/home/grinuser/.grin/main/.owner_api_secret"
 
 #location of the node api secret for basic auth on the Grin API
-node_api_secret_path = "/home/grinuser/.grin/main/.foreign_api_secret"
+node_api_secret_path = "/grin-node-home/.grin/main/.foreign_api_secret"
 
 #where the wallet should find a running node
 check_node_api_http_addr = "http://host.docker.internal:3413"
@@ -33,7 +33,7 @@ check_node_api_http_addr = "http://host.docker.internal:3413"
 #include the foreign API endpoints on the same port as the owner
 #API. Useful for networking environments like AWS ECS that make
 #it difficult to access multiple ports on a single service.
-owner_api_include_foreign = false
+owner_api_include_foreign = true
 
 #where to find wallet files (seed, data, etc)
 data_file_dir = "/home/grinuser/.grin/main/wallet_data"
@@ -113,7 +113,7 @@ send_config_dir = "/home/grinuser/.grin/main/wallet_data"
 log_to_stdout = true
 
 #log level for stdout: Error, Warning, Info, Debug, Trace
-stdout_log_level = "Warning"
+stdout_log_level = "Debug"
 
 #whether to log to a file
 log_to_file = true

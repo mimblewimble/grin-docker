@@ -6,18 +6,19 @@ services:
       dockerfile: base-build/Dockerfile.wallet.contracts
       target: grin_wallet_contracts
     image: grin-wallet-mainnet-contracts
-    command: ["owner_api", "--run_foreign"]
+    command: ["owner_api"]
     environment:
       - RUST_BACKTRACE=1
     expose:
       - "3415"
-      - "3420"
     ports:
       - "3415:3415"
-      - "3420:3420"
     volumes:
       - ../../configs/mainnet/grin-wallet.toml:/home/grinuser/.grin/main/grin-wallet.toml
       - grin-wallet-home-mainnet-contracts:/home/grinuser
+      - main_grin-home-mainnet-master:/grin-node-home
 
 volumes:
-  grin-wallet-home-contracts-master:
+  grin-wallet-home-mainnet-contracts:
+  main_grin-home-mainnet-master:
+    external: true
