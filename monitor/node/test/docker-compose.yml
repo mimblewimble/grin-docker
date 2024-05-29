@@ -4,9 +4,12 @@ services:
       context: ../../../
       dockerfile: base-olivetin/Dockerfile
       target: olivetin_grin_build
-    image: grin-olivetin-testnet
+    image: grin-olivetin-testnet 
+    environment:
+      - NODE_API_PORT=13413
+      - NODE_CHAIN_TYPE=test
     volumes:
-      - ../configs/node-mainnet.yaml:/etc/OliveTin/config.yaml
+      - ../configs/testnet/node.yaml:/etc/OliveTin/config.yaml
       - ../json-rpc/node:/etc/OliveTin/json-rpc/node
       - test_grin-home-testnet-master:/grin-node-home
     ports:
@@ -14,5 +17,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  main_grin-home-mainnet-master:
+  test_grin-home-testnet-master:
     external: true

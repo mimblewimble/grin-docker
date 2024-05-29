@@ -1,7 +1,8 @@
+listenAddressSingleHTTPFrontend: 0.0.0.0:11337
 actions:
   - title: Node Sync Status
     popupOnStart: execution-dialog-stdout-only
-    shell: curl -s -X POST host.docker.internal:3413/v2/owner -u grin:`cat /grin-node-home/.grin/main/.api_secret` -d @/etc/OliveTin/json-rpc/node/get_status.json
+    shell: /etc/OliveTin/json-rpc/node/execute_owner.sh
     icon: ping
     timeout: 5
 
@@ -12,7 +13,7 @@ actions:
 dashboards:
   - title: All Processes
     contents:
-      - title: Grin Node
+      - title: Grin Node (Testnet)
         type: fieldset
         contents:
         - title: Node Sync Status

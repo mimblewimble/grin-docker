@@ -5,8 +5,11 @@ services:
       dockerfile: base-olivetin/Dockerfile
       target: olivetin_grin_build
     image: grin-olivetin-mainnet 
+    environment:
+      - NODE_API_PORT=3413
+      - NODE_CHAIN_TYPE=main
     volumes:
-      - ../configs/node-mainnet.yaml:/etc/OliveTin/config.yaml
+      - ../configs/mainnet/node.yaml:/etc/OliveTin/config.yaml
       - ../json-rpc/node:/etc/OliveTin/json-rpc/node
       - main_grin-home-mainnet-master:/grin-node-home
     ports:
