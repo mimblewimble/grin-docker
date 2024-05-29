@@ -1,0 +1,134 @@
+
+#Version of the Generated Configuration File for the Grin Wallet (DO NOT EDIT)
+config_file_version = 2
+
+
+#########################################
+### WALLET CONFIGURATION              ###
+#########################################
+[wallet]
+chain_type = "Mainnet"
+
+#path of TLS certificate file, self-signed certificates are not supported
+#tls_certificate_file = ""
+#private key for the TLS certificate
+#tls_certificate_key = ""
+
+#port for wallet listener
+api_listen_port = 3415
+
+#port for wallet owner api
+owner_api_listen_port = 3420
+
+#path of the secret token used by the API to authenticate the calls
+#comment it to disable basic auth
+api_secret_path = "/home/grinuser/.grin/main/.owner_api_secret"
+
+#location of the node api secret for basic auth on the Grin API
+node_api_secret_path = "/home/grinuser/.grin/main/.foreign_api_secret"
+
+#where the wallet should find a running node
+check_node_api_http_addr = "http://host.docker.internal:3413"
+
+#include the foreign API endpoints on the same port as the owner
+#API. Useful for networking environments like AWS ECS that make
+#it difficult to access multiple ports on a single service.
+owner_api_include_foreign = false
+
+#where to find wallet files (seed, data, etc)
+data_file_dir = "/home/grinuser/.grin/main/wallet_data"
+
+#If true, don't store calculated commits in the database
+#better privacy, but at a performance cost of having to
+#re-calculate commits every time they're used
+no_commit_cache = false
+
+#Whether to use the black background color scheme for command line
+dark_background_color_scheme = true
+
+
+#########################################
+### TOR CONFIGURATION (Experimental)  ###
+#########################################
+[tor]
+
+#Whether to skip send attempts (used for debugging) 
+skip_send_attempt = false
+
+#Whether to start tor listener on listener startup (default true)
+use_tor_listener = false
+
+#Address of the running TOR (SOCKS) server
+socks_proxy_addr = "127.0.0.1:59050"
+
+#Directory to output TOR configuration to when sending
+send_config_dir = "/home/grinuser/.grin/main/wallet_data"
+
+
+#########################################
+### TOR BRIDGE                        ###
+#########################################
+[tor.bridge]
+
+
+#Tor bridge relay: allow to send and receive via TOR in a country where it is censored.
+#Enable it by entering a single bridge line. To disable it, you must comment it.
+#Support of the transport: obfs4, meek and snowflake. 
+#obfs4proxy or snowflake client binary must be installed and on your path.
+#For example, the bridge line must be in the following format for obfs4 transport: "obfs4 [IP:PORT] [FINGERPRINT] cert=[CERT] iat-mode=[IAT-MODE]"
+#bridge_line = ""
+
+#Plugging client option, needed only for snowflake (let it empty if you want to use the default option of tor) or debugging purpose
+#client_option = ""
+
+
+#########################################
+### TOR PROXY                         ###
+#########################################
+[tor.proxy]
+
+
+#Type of proxy, eg "socks4", "socks5", "http", "https"
+#transport = "https"
+
+#Proxy address, eg IP:PORT or Hostname
+#server = ""
+
+#Username for the proxy server authentification
+#user = ""
+
+#Password for the proxy server authentification
+#pass = ""
+
+#This computer goes through a firewall that only allows connections to certain ports (Optional)
+#allowed_port = [80, 443]
+
+
+#########################################
+### LOGGING CONFIGURATION             ###
+#########################################
+[logging]
+
+#whether to log to stdout
+log_to_stdout = true
+
+#log level for stdout: Error, Warning, Info, Debug, Trace
+stdout_log_level = "Warning"
+
+#whether to log to a file
+log_to_file = true
+
+#log level for file: Error, Warning, Info, Debug, Trace
+file_log_level = "Debug"
+
+#log file path
+log_file_path = "/home/grinuser/.grin/main/grin-wallet.log"
+
+#whether to append to the log file (true), or replace it on every run (false)
+log_file_append = true
+
+#maximum log file size in bytes before performing log rotation
+#comment it to disable log rotation
+log_max_size = 16777216
+log_max_files = 32
+
