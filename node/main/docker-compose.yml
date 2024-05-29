@@ -1,0 +1,22 @@
+services:
+  # Grin Mainnet Node - Built from master
+  grin-node-mainnet-master:
+    build:
+      context: ../../
+      dockerfile: base-build/Dockerfile.node.master
+      target: grin_node_master
+    image: grin-node-mainnet-master
+    environment:
+      - RUST_BACKTRACE=1
+    expose:
+      - "3413"
+      - "3414"
+    ports:
+      - "3413:3413"
+      - "3414:3414"
+    volumes:
+      - ../configs/mainnet/grin-server.toml:/home/grinuser/.grin/main/grin-server.toml
+      - grin-home-mainnet-master:/home/grinuser
+
+volumes:
+  grin-home-mainnet-master:

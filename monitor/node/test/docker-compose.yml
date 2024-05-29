@@ -1,0 +1,18 @@
+services:
+  grin-olivetin:
+    build:
+      context: ../../../
+      dockerfile: base-olivetin/Dockerfile
+      target: olivetin_grin_build
+    image: grin-olivetin-testnet
+    volumes:
+      - ../configs/node-mainnet.yaml:/etc/OliveTin/config.yaml
+      - ../json-rpc/node:/etc/OliveTin/json-rpc/node
+      - test_grin-home-testnet-master:/grin-node-home
+    ports:
+      - "11337:11337"
+    restart: unless-stopped
+
+volumes:
+  main_grin-home-mainnet-master:
+    external: true

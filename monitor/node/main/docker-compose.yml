@@ -1,18 +1,18 @@
 services:
   grin-olivetin:
     build:
-      context: ..
+      context: ../../../
       dockerfile: base-olivetin/Dockerfile
       target: olivetin_grin_build
     image: grin-olivetin-mainnet 
     volumes:
-      - ./config/node-mainnet.yaml:/etc/OliveTin/config.yaml
-      - ./json-rpc:/etc/OliveTin/json-rpc
-      - node_grin-home-mainnet-master:/grin-node-home
+      - ../configs/node-mainnet.yaml:/etc/OliveTin/config.yaml
+      - ../json-rpc/node:/etc/OliveTin/json-rpc/node
+      - main_grin-home-mainnet-master:/grin-node-home
     ports:
       - "1337:1337"
     restart: unless-stopped
 
 volumes:
-  node_grin-home-mainnet-master:
+  main_grin-home-mainnet-master:
     external: true

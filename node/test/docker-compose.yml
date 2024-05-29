@@ -1,0 +1,23 @@
+services:
+  # Grin Testnet Node - Built from master
+  grin-node-testnet-master:
+    build:
+      context: ../../
+      dockerfile: ./base-build/Dockerfile.node.master
+      target: grin_node_master
+    image: grin-node-testnet-master
+    command: ["--testnet"]
+    environment:
+      - RUST_BACKTRACE=1
+    expose:
+      - "13413"
+      - "13414"
+    ports:
+      - "13413:13413"
+      - "13414:13414"
+    volumes:
+      - ../configs/testnet/grin-server.toml:/home/grinuser/.grin/test/grin-server.toml
+      - grin-home-testnet-master:/home/grinuser
+
+volumes:
+  grin-home-testnet-master:
