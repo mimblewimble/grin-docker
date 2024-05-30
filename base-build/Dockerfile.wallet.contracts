@@ -15,6 +15,7 @@ RUN apt-get update && apt-get -y install cmake clang
 WORKDIR /usr/src
 RUN git clone https://github.com/mimblewimble/grin-wallet.git
 WORKDIR /usr/src/grin-wallet
+RUN git checkout contracts
 RUN cargo build --release
 
 #######################

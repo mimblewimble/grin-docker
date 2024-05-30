@@ -6,7 +6,7 @@ services:
       dockerfile: base-build/Dockerfile.wallet.contracts
       target: grin_wallet_contracts
     image: grin-wallet-mainnet-contracts
-    command: ["owner_api"]
+    command: ["owner_api", "--run_foreign"]
     environment:
       - RUST_BACKTRACE=1
     expose:

@@ -14,7 +14,7 @@ chain_type = "Mainnet"
 #private key for the TLS certificate
 #tls_certificate_key = ""
 
-api_listen_interface = "0.0.0.0"
+owner_api_listen_interface = "0.0.0.0"
 
 #port for wallet listener
 api_listen_port = 3415
