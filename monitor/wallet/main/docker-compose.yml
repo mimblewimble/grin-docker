@@ -1,0 +1,19 @@
+services:
+  grin-olivetin:
+    build:
+      context: ../../../
+      dockerfile: base-olivetin/Dockerfile
+      target: olivetin_grin_build
+    image: grin-olivetin-mainnet 
+    environment:
+      - OWNER_API_PORT=3415
+    volumes:
+      - ../configs/mainnet/wallet.yaml:/etc/OliveTin/config.yaml
+      - ../owner_api_client:/etc/OliveTin/owner_api_client
+    ports:
+      - "2337:2337"
+    restart: unless-stopped
+
+volumes:
+  main_grin-home-mainnet-master:
+    external: true
