@@ -1,17 +1,36 @@
 listenAddressSingleHTTPFrontend: 0.0.0.0:1337
 actions:
-  - title: Grin Wallet Info
+  - title: Create Wallet
     popupOnStart: execution-dialog-stdout-only
-    shell: node /etc/OliveTin/owner_api_client/wallet_info.js
-
+    shell: node /etc/OliveTin/owner_api_client/src/create_wallet.js
+    arguments:
+      - name: wallet_password
+        type: ascii_sentence
+        description: Wallet Password
+  - title: Wallet Summary Info
+    popupOnStart: execution-dialog-stdout-only
+    shell: node /etc/OliveTin/owner_api_client/src/wallet_info.js
+    arguments:
+      - name: wallet_password
+        type: ascii_sentence
+        description: Wallet Password
+  - title: Wallet Txs
+    popupOnStart: execution-dialog-stdout-only
+    shell: node /etc/OliveTin/owner_api_client/src/wallet_txs.js
+    arguments:
+      - name: wallet_password
+        type: ascii_sentence
+        description: Wallet Password
+  
 dashboards:
-  - title: All Processes
+  - title: Grin Wallet (Mainnet - Contracts)
     contents:
-      - title: Grin Node (Mainnet)
+      - title: Create Wallet
         type: fieldset
         contents:
-        - title: Node Sync Status
-      - type: fieldset
-        title: Grin Wallet
+        - title: Create Wallet      
+      - title: Info
+        type: fieldset
         contents:
-        - title: Grin Wallet Info
+        - title: Wallet Summary Info
+        - title: Wallet Txs

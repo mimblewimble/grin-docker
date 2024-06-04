@@ -14,9 +14,6 @@ RUN apt-get update && apt-get -y install cmake clang
 #checkout source fresh and build
 WORKDIR /usr/src
 RUN git clone https://github.com/mimblewimble/grin-wallet.git
-WORKDIR /usr/src/grin-wallet
-RUN git checkout contracts
-RUN cargo build --release
 
 #######################
 # DEPLOY              #
@@ -24,13 +21,27 @@ RUN cargo build --release
 #Deploy binaries to a minimal image
 
 FROM grin_wallet_build as grin_wallet_contracts
+WORKDIR /usr/src/grin-wallet
+RUN git checkout contracts
+RUN cargo build --release
 LABEL maintainer="yeastplume" description="Grin Wallet - Build from contracts branch"
-COPY --from=grin_wallet_build /usr/src/grin-wallet/target/release/grin-wallet /usr/bin/grin-wallet
+RUN cp /usr/src/grin-wallet/target/release/grin-wallet /usr/bin/grin-wallet
 RUN useradd -m grinuser
 USER grinuser
 RUN mkdir -p /home/grinuser/.grin/main
 RUN mkdir -p /home/grinuser/.grin/test
-
 WORKDIR /home/grinuser
+ENTRYPOINT ["/usr/bin/grin-wallet"]
 
+FROM grin_wallet_build as grin_wallet_master
+WORKDIR /usr/src/grin-wallet
+RUN git checkout master
+RUN cargo build --release
+LABEL maintainer="yeastplume" description="Grin Wallet - Build from master"
+RUN cp /usr/src/grin-wallet/target/release/grin-wallet /usr/bin/grin-wallet
+RUN useradd -m grinuser
+USER grinuser
+RUN mkdir -p /home/grinuser/.grin/main
+RUN mkdir -p /home/grinuser/.grin/test
+WORKDIR /home/grinuser
 ENTRYPOINT ["/usr/bin/grin-wallet"]

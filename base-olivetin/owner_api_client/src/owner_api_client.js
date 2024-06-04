@@ -59,7 +59,6 @@ class JSONRequestEncrypted {
 		const aesCipher = aes256gcm(key);
 		const nonce = new Buffer.from(crypto.randomBytes(12));
 		let enc = aesCipher.encrypt(JSON.stringify(this), nonce);
-		console.log("Encrypted: " + enc)
 		let params = {
 			'nonce': nonce.toString('hex'),
 			'body_enc': enc,
@@ -93,6 +92,31 @@ async function initSecure() {
 	return ecdh.computeSecret(response.result.Ok, 'hex', 'hex')
 }
 
+async function openWallet(password, shared_key) {
+	let response = await new JSONRequestEncrypted(1, 'open_wallet', {
+		"name": null,
+		"password": password,
+	}).send(shared_key);
+
+	let token = null;
+
+	try {
+		token = JSON.parse(response).result.Ok;
+		return token
+		//let result = JSON.parse(info_response).result.Ok;
+		//console.log(result);
+	} catch (e) {
+		console.log(JSON.parse(response))
+		return null
+	}
+}
+
+async function closeWallet(shared_key, sequence) {
+	info_response = await new JSONRequestEncrypted(sequence, 'close_wallet', {
+		"name": null,
+	}).send(shared_key)
+}
+
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -100,6 +124,8 @@ function sleep(ms) {
 module.exports = {
 	initClient,
 	initSecure,
+	openWallet,
+	closeWallet,
 	JSONRequestEncrypted,
 }
 

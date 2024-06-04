@@ -15,3 +15,9 @@ RUN dpkg -i OliveTin_linux_amd64.deb
 #######################
 
 ENTRYPOINT ["/usr/local/bin/OliveTin"]
+
+FROM olivetin_grin_build as olivetin_grin_wallet_build
+RUN apt-get -y install nodejs npm
+COPY /base-olivetin/owner_api_client /etc/OliveTin/owner_api_client
+WORKDIR /etc/OliveTin/owner_api_client
+RUN npm install

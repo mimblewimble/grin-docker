@@ -1,30 +1,32 @@
 const ownerClient = require('./owner_api_client.js');
 
 const port = process.env.OWNER_API_PORT || 3415;
+const password = process.env.WALLET_PASSWORD || 'password';
 
 async function main() {
-	let client = ownerClient.initClient('http://host.docker.internal:' + port + '/v3/owner');
+	ownerClient.initClient('http://host.docker.internal:' + port + '/v3/owner');
 	let shared_key = await ownerClient.initSecure();
 
-	let response = await new ownerClient.JSONRequestEncrypted(1, 'open_wallet', {
-		"name": null,
-		"password": "password",
-	}).send(shared_key);
+	let token = await ownerClient.openWallet(password, shared_key);
+	if (token == null) {
+		return
+	}
 
-	let token = JSON.parse(response).result.Ok;
-
-	let info_response = await new ownerClient.JSONRequestEncrypted(2, 'retrieve_summary_info', {
+	let info_response = await new ownerClient.JSONRequestEncrypted(2, 'retrieve_txs', {
 		"token": token,
-		"refresh_from_node": true,
-		"minimum_confirmations": 1,
+		"tx_id": null,
+		"tx_slate_id": null,
+		"refresh_from_node": true
 	}).send(shared_key)
 
-	let result = JSON.parse(info_response).result.Ok;
-	console.log(result);
+	try {
+		let result = JSON.parse(info_response).result.Ok;
+		console.log(result);
+	} catch (e) {
+		console.log(JSON.parse(info_response))
+	}
 
-	info_response = await new ownerClient.JSONRequestEncrypted(3, 'close_wallet', {
-		"name": null,
-	}).send(shared_key)
+	await ownerClient.closeWallet(shared_key, 3)
 }
 
 

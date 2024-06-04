@@ -4,8 +4,8 @@ services:
     build:
       context: ../../../
       dockerfile: base-build/Dockerfile.wallet
-      target: grin_wallet_contracts
-    image: grin-wallet-mainnet-contracts
+      target: grin_wallet_master
+    image: grin-wallet-mainnet-master
     command: ["owner_api", "--run_foreign"]
     environment:
       - RUST_BACKTRACE=1
@@ -15,10 +15,10 @@ services:
       - "3415:3415"
     volumes:
       - ../../configs/mainnet/grin-wallet.toml:/home/grinuser/.grin/main/grin-wallet.toml
-      - grin-wallet-home-mainnet-contracts:/home/grinuser
+      - grin-wallet-home-mainnet-master:/home/grinuser
       - main_grin-home-mainnet-master:/grin-node-home
 
 volumes:
-  grin-wallet-home-mainnet-contracts:
+  grin-wallet-home-mainnet-master:
   main_grin-home-mainnet-master:
     external: true
