@@ -6,6 +6,26 @@ actions:
     icon: ping
     timeout: 5
 
+  - title: Get Block
+    popupOnStart: execution-dialog-stdout-only
+    shell: /etc/OliveTin/json-rpc/node/execute_get_block.sh
+    icon: ping
+    timeout: 5
+    arguments:
+      - name: block_number
+        type: ascii_sentence
+        description: Block Number
+        
+  - title: Get Outputs
+    popupOnStart: execution-dialog-stdout-only
+    shell: /etc/OliveTin/json-rpc/node/execute_get_outputs.sh
+    icon: ping
+    timeout: 5
+    arguments:
+      - name: commits
+        type:  very_dangerous_raw_string
+        description: Commits
+  
   - title: Grin Wallet Info
     popupOnStart: execution-dialog-stdout-only
     shell: ping localhost
@@ -17,6 +37,8 @@ dashboards:
         type: fieldset
         contents:
         - title: Node Sync Status
+        - title: Get Block
+        - title: Get Outputs
       - type: fieldset
         title: Grin Wallet
         contents:

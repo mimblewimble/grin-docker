@@ -6,7 +6,7 @@
 
 FROM debian:latest as olivetin_grin_build
 
-RUN apt-get update && apt-get -y install curl && apt-get -y install wget
+RUN apt-get update && apt-get -y install curl && apt-get -y install wget && apt-get -y install gettext-base
 RUN wget https://github.com/OliveTin/OliveTin/releases/latest/download/OliveTin_linux_amd64.deb
 RUN dpkg -i OliveTin_linux_amd64.deb
 

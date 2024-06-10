@@ -1,0 +1,6 @@
+{
+    "jsonrpc": "2.0",
+    "method": "get_outputs",
+    "params": [$COMMITS, null, null, true, true],
+    "id": 1
+}

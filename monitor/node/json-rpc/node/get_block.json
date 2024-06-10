@@ -1,0 +1,6 @@
+{
+    "jsonrpc": "2.0",
+    "method": "get_block",
+    "params": [$BLOCK_NUMBER, null, null],
+    "id": 1
+}
