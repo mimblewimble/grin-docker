@@ -6,9 +6,9 @@
 
 ## Basic usage
 
-Install docker, docker-compose. Be in the correct directory with the approriate docker-compose.yml file
-
-Images are in the middle of being updated to 'modern Grin' (5.4.0+), and currently working compose files are:
+Install docker. Docker images first need to be build using *docker-compose build* and subsequently can be run using *docker-compose up -d*
+To build a docker image, go to a directory that contains a *docker-compose.yml* file and run *docker-compose* within that directory.
+The list of directories below contain a *docker-compose.yml* to build you docker image from.
 
 `node/main` -> Builds and deploys a mainnet node from grin latest master
 `node/test` -> Builds and deploys a testnet node from grin latest master
@@ -16,13 +16,14 @@ Images are in the middle of being updated to 'modern Grin' (5.4.0+), and current
 `monitor/main` -> Build and deploys an monitor node based on OliveTin allowing user to run node commands via a web gui
 `monitor/test` -> As above, but against testnet.
 
+Images are in the middle of being updated to 'modern Grin' (5.4.0+), and currently working compose files are:
 For now, a typical workflow would be:
 
 ```
 cd node/main
 docker-compose build
 docker-compose up -d
-cd ../../monitor/main
+cd ../../monitor/node/main
 docker-compose up -d
 ```
 
