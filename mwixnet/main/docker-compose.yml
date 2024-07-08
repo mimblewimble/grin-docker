@@ -1,0 +1,20 @@
+services:
+  # Grin Testnet Node - Built from master
+  grin-mwixnet-testnet:
+    build:
+      context: ../../
+      dockerfile: ./base-build/Dockerfile.mwixnet
+      target: grin_mwixnet_master
+    image: grin-mwixnet-master
+    environment:
+      - RUST_BACKTRACE=1
+    expose:
+      - "3000"
+    ports:
+      - "3000"
+    volumes:
+#     - ../configs/testnet/grin-server.toml:/home/grinuser/.grin/test/grin-server.toml
+      - grin-home-testnet-master:/home/grinuser
+
+volumes:
+  grin-home-testnet-master:
