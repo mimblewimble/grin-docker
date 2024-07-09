@@ -1,10 +1,13 @@
 services:
-  # Grin Wallet Listeners - Built from contracts
-  grin-wallet-mainnet-contracts:
+  # Grin Wallet Listeners - Built from master
+  grin-wallet-mainnet-master:
     build:
       context: ../../../
       dockerfile: base-build/Dockerfile.wallet
       target: grin_wallet_master
+    container_name: grin_wallet_mainnet_master_container
+    networks:
+      - grin-mainnet-network
     image: grin-wallet-mainnet-master
     command: ["owner_api", "--run_foreign"]
     environment:
@@ -21,4 +24,9 @@ services:
 volumes:
   grin-wallet-home-mainnet-master:
   main_grin-home-mainnet-master:
+    external: true
+
+networks:
+  grin-mainnet-network:
+    name: grin_mainnet_network
     external: true

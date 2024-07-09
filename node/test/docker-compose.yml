@@ -5,6 +5,9 @@ services:
       context: ../../
       dockerfile: ./base-build/Dockerfile.node.master
       target: grin_node_master
+    container_name: grin_node_testnet_master_container
+    networks:
+      - grin-testnet-network
     image: grin-node-testnet-master
     command: ["--testnet"]
     environment:
@@ -21,3 +24,7 @@ services:
 
 volumes:
   grin-home-testnet-master:
+
+networks:
+  grin-testnet-network:
+    name: grin_testnet_network

@@ -1,0 +1,32 @@
+services:
+  # Grin Wallet Listeners - Built from master
+  grin-wallet-testnet-contracts:
+    build:
+      context: ../../../
+      dockerfile: base-build/Dockerfile.wallet
+      target: grin_wallet_master
+    container_name: grin_wallet_testnet_master_container
+    networks:
+      - grin-testnet-network
+    image: grin-wallet-testnet-master
+    command: ["--testnet", "owner_api", "--run_foreign"]
+    environment:
+      - RUST_BACKTRACE=1
+    expose:
+      - "13415"
+    ports:
+      - "13415:13415"
+    volumes:
+      - ../../configs/testnet/grin-wallet.toml:/home/grinuser/.grin/test/grin-wallet.toml
+      - grin-wallet-home-testnet-master:/home/grinuser
+      - test_grin-home-testnet-master:/grin-node-home
+
+volumes:
+  grin-wallet-home-testnet-master:
+  test_grin-home-testnet-master:
+    external: true
+
+networks:
+  grin-testnet-network:
+    name: grin_testnet_network
+    external: true
