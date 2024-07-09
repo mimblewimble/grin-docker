@@ -4,12 +4,17 @@ services:
       context: ../../../
       dockerfile: base-olivetin/Dockerfile
       target: olivetin_grin_build
+    container_name: grin_test_monitor_container
+    networks:
+      - grin-testnet-network
     image: grin-olivetin-testnet 
     environment:
-      - NODE_API_PORT=13413
+      - NODE_API_ADDR=grin_node_testnet_master_container:13413
       - NODE_CHAIN_TYPE=test
+    command: > 
+      bash -c sed -i ''s/[NODE_MONITOR_LISTEN_ADDRESS]/0.0.0.0:11337}'' ../configs/node.yaml > ../configs/node.yaml.tmp
     volumes:
-      - ../configs/testnet/node.yaml:/etc/OliveTin/config.yaml
+      - ../configs/node.yaml:/etc/OliveTin/config.yaml
       - ../json-rpc/node:/etc/OliveTin/json-rpc/node
       - test_grin-home-testnet-master:/grin-node-home
     ports:
@@ -18,4 +23,9 @@ services:
 
 volumes:
   test_grin-home-testnet-master:
+    external: true
+
+networks:
+  grin-testnet-network:
+    name: grin_testnet_network
     external: true

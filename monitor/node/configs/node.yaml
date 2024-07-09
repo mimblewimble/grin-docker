@@ -1,4 +1,4 @@
-listenAddressSingleHTTPFrontend: 0.0.0.0:1337
+listenAddressSingleHTTPFrontend: [NODE_MONITOR_LISTEN_ADDRESS]
 actions:
   - title: Node Sync Status
     popupOnStart: execution-dialog-stdout-only
@@ -33,7 +33,7 @@ actions:
 dashboards:
   - title: All Processes
     contents:
-      - title: Grin Node (Mainnet)
+      - title: Grin Node
         type: fieldset
         contents:
         - title: Node Sync Status
