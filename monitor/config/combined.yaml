@@ -25,10 +25,6 @@ actions:
       - name: commits
         type:  very_dangerous_raw_string
         description: Commits
-  
-  - title: Grin Wallet Info
-    popupOnStart: execution-dialog-stdout-only
-    shell: ping localhost
 
   - title: Create Wallet
     popupOnStart: execution-dialog-stdout-only
@@ -51,10 +47,10 @@ actions:
       - name: wallet_password
         type: ascii_sentence
         description: Wallet Password
- 
 
 dashboards:
   - title: All Processes
+    type: fieldset
     contents:
       - title: Grin Node
         type: fieldset
@@ -62,8 +58,8 @@ dashboards:
         - title: Node Sync Status
         - title: Get Block
         - title: Get Outputs
-      - type: fieldset
-        title: Grin Wallet
+      - title: Grin Wallet
+        type: fieldset
         contents:
         - title: Create Wallet      
         - title: Wallet Summary Info

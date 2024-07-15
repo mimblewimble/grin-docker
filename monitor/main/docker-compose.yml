@@ -1,15 +1,20 @@
 services:
   grin-olivetin:
     build:
-      context: ../../../
+      context: ../../
       dockerfile: base-olivetin/Dockerfile
-      target: olivetin_grin_build
-    image: grin-olivetin-mainnet 
+      target: olivetin_grin_combined_build
+    container_name: grin_main_monitor_container
+    networks:
+      - grin-mainnet-network
+    image: grin-olivetin-mainnnet 
     environment:
-      - NODE_API_PORT=3413
+      - NODE_API_ADDR=grin_node_mainnet_master_container:3413
       - NODE_CHAIN_TYPE=main
+      - OWNER_API_PORT=3415
+      - OWNER_API_HOST=grin-wallet-mainnet-contracts
     volumes:
-      - ../configs/mainnet/node.yaml:/etc/OliveTin/config.yaml
+      - ../config/combined.yaml:/etc/OliveTin/config.yaml
       - ../json-rpc/node:/etc/OliveTin/json-rpc/node
       - main_grin-home-mainnet-master:/grin-node-home
     ports:
@@ -18,4 +23,9 @@ services:
 
 volumes:
   main_grin-home-mainnet-master:
+    external: true
+
+networks:
+  grin-mainnet-network:
+    name: grin_mainnet_network
     external: true
