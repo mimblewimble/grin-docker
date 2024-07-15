@@ -1,8 +1,8 @@
-listenAddressSingleHTTPFrontend: [NODE_MONITOR_LISTEN_ADDRESS]
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337
 actions:
   - title: Node Sync Status
     popupOnStart: execution-dialog-stdout-only
-    shell: /etc/OliveTin/json-rpc/node/execute_owner.sh
+    shell: /etc/OliveTin/json-rpc/node/execute_get_status.sh
     icon: ping
     timeout: 5
 
@@ -30,6 +30,29 @@ actions:
     popupOnStart: execution-dialog-stdout-only
     shell: ping localhost
 
+  - title: Create Wallet
+    popupOnStart: execution-dialog-stdout-only
+    shell: node /etc/OliveTin/owner_api_client/src/create_wallet.js
+    arguments:
+      - name: wallet_password
+        type: ascii_sentence
+        description: Wallet Password
+  - title: Wallet Summary Info
+    popupOnStart: execution-dialog-stdout-only
+    shell: node /etc/OliveTin/owner_api_client/src/wallet_info.js
+    arguments:
+      - name: wallet_password
+        type: ascii_sentence
+        description: Wallet Password
+  - title: Wallet Txs
+    popupOnStart: execution-dialog-stdout-only
+    shell: node /etc/OliveTin/owner_api_client/src/wallet_txs.js
+    arguments:
+      - name: wallet_password
+        type: ascii_sentence
+        description: Wallet Password
+ 
+
 dashboards:
   - title: All Processes
     contents:
@@ -42,4 +65,6 @@ dashboards:
       - type: fieldset
         title: Grin Wallet
         contents:
-        - title: Grin Wallet Info
+        - title: Create Wallet      
+        - title: Wallet Summary Info
+        - title: Wallet Txs
