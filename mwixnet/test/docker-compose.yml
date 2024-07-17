@@ -1,21 +1,33 @@
 services:
-  # Grin Testnet Node - Built from master
+  # Grin Mwixnet node - testnet
   grin-mwixnet-testnet:
     build:
       context: ../../
       dockerfile: ./base-build/Dockerfile.mwixnet
       target: grin_mwixnet_master
     image: grin-mwixnet-master
+    container_name: grin_test_mwixnet_container
+    networks:
+      - grin-testnet-network
     command: ["--testnet"]
     environment:
       - RUST_BACKTRACE=1
+      - GRIN_CHAIN_TYPE=test
+      - GRIN_NODE_URL=grin-node-testnet-master-container:13413
+      - WALLET_OWNER_URL=grin-wallet-testnet-contracts-container:13415
     expose:
       - "3000"
     ports:
       - "3000"
     volumes:
-#     - ../configs/testnet/grin-server.toml:/home/grinuser/.grin/test/grin-server.toml
-      - grin-home-testnet-master:/home/grinuser
+      - test_grin-home-testnet-master:/home/grinuser
+      - ../scripts/mwixnet-first-run.sh:/home/grinuser/mwixnet-first-run.sh
 
 volumes:
-  grin-home-testnet-master:
+  test_grin-home-testnet-master:
+    external: true
+
+networks:
+  grin-testnet-network:
+    name: grin_testnet_network
+    external: true

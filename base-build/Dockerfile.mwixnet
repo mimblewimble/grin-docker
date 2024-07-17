@@ -30,4 +30,4 @@ USER grinuser
 RUN mkdir -p /home/grinuser/.grin/main
 RUN mkdir -p /home/grinuser/.grin/test
 WORKDIR /home/grinuser
-ENTRYPOINT ["/usr/bin/mwixnet"]
+ENTRYPOINT ["/home/grinuser/mwixnet-first-run.sh"]

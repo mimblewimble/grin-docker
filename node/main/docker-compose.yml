@@ -5,7 +5,7 @@ services:
       context: ../../
       dockerfile: base-build/Dockerfile.node.master
       target: grin_node_master
-    container_name: grin_node_mainnet_master_container
+    container_name: grin-node-mainnet-master-container
     networks:
       - grin-mainnet-network
     image: grin-node-mainnet-master

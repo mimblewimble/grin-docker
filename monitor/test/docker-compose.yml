@@ -4,21 +4,22 @@ services:
       context: ../../
       dockerfile: base-olivetin/Dockerfile
       target: olivetin_grin_combined_build
-    container_name: grin_test_monitor_container
+    container_name: grin-test-monitor-container
     networks:
       - grin-testnet-network
     image: grin-olivetin-testnet 
     environment:
-      - NODE_API_ADDR=grin_node_testnet_master_container:13413
+      - PORT=11337
+      - NODE_API_ADDR=grin-node-testnet-master-container:13413
       - NODE_CHAIN_TYPE=test
       - OWNER_API_PORT=13415
-      - OWNER_API_HOST=grin-wallet-testnet-contracts
+      - OWNER_API_HOST=grin-wallet-testnet-contracts-container
     volumes:
       - ../config/combined.yaml:/etc/OliveTin/config.yaml
       - ../json-rpc/node:/etc/OliveTin/json-rpc/node
       - test_grin-home-testnet-master:/grin-node-home
     ports:
-      - "1337:1337"
+      - "11337:11337"
     restart: unless-stopped
 
 volumes:

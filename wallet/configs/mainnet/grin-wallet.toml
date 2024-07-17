@@ -30,7 +30,7 @@ owner_api_listen_port = 3415
 node_api_secret_path = "/grin-node-home/.grin/main/.foreign_api_secret"
 
 #where the wallet should find a running node
-check_node_api_http_addr = "http://grin_node_mainnet_master_container:3413"
+check_node_api_http_addr = "http://grin-node-mainnet-master-container:3413"
 
 #include the foreign API endpoints on the same port as the owner
 #API. Useful for networking environments like AWS ECS that make

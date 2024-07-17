@@ -5,7 +5,7 @@ services:
       context: ../../../
       dockerfile: base-build/Dockerfile.wallet
       target: grin_wallet_contracts
-    container_name: grin_wallet_testnet_contracts_container
+    container_name: grin-wallet-testnet-contracts-container
     networks:
       - grin-testnet-network
     image: grin-wallet-testnet-contracts
