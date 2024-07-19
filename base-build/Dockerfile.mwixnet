@@ -9,7 +9,7 @@ FROM rust:latest as grin_mwixnet_build
 
 # Mwixnet
 # needs cmake
-RUN apt-get update && apt-get -y install cmake clang
+RUN apt-get update && apt-get -y install cmake clang && apt-get -y install tor
 #RUN apt-get -y install libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 #checkout source fresh and build
 WORKDIR /usr/src
