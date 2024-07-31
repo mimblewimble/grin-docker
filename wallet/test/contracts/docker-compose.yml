@@ -6,6 +6,12 @@ services:
       dockerfile: base-build/Dockerfile.wallet
       target: grin_wallet_contracts
     container_name: grin-wallet-testnet-contracts-container
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-X",  "POST", "grin-wallet-testnet-contracts-container:13415/v2/foreign", "-u", "grin:`cat /home/grinuser/.grin/test/.api_secret`", "-d", '{"jsonrpc": "2.0", "method": "check_version", "params": {}, "id": 1}']
+      interval: 5s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
     networks:
       - grin-testnet-network
     image: grin-wallet-testnet-contracts
@@ -19,11 +25,12 @@ services:
     volumes:
       - ../../configs/testnet/grin-wallet.toml:/home/grinuser/.grin/test/grin-wallet.toml
       - grin-wallet-home-testnet-contracts:/home/grinuser
-      - test_grin-home-testnet-master:/grin-node-home
+      - grin-home-testnet-master:/grin-node-home
 
 volumes:
   grin-wallet-home-testnet-contracts:
-  test_grin-home-testnet-master:
+    name: grin-wallet-home-testnet-contracts
+  grin-home-testnet-master:
     external: true
 
 networks:

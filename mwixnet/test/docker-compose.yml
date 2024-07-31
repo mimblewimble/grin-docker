@@ -22,14 +22,15 @@ services:
     volumes:
       - ../scripts/mwixnet-first-run.sh:/home/grinuser/mwixnet-first-run.sh
       - grin-mwixnet-home-testnet-master:/home/grinuser
-      - test_grin-home-testnet-master:/grin-node-home
-      - contracts_grin-wallet-home-testnet-contracts:/grin-wallet-home
+      - grin-home-testnet-master:/grin-node-home
+      - grin-wallet-home-testnet-contracts:/grin-wallet-home
 
 volumes:
   grin-mwixnet-home-testnet-master:
-  test_grin-home-testnet-master:
+    name: grin-mwixnet-home-testnet-master
+  grin-home-testnet-master:
     external: true
-  contracts_grin-wallet-home-testnet-contracts:
+  grin-wallet-home-testnet-contracts:
     external: true
 
 networks:

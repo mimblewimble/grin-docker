@@ -6,6 +6,12 @@ services:
       dockerfile: ./base-build/Dockerfile.node.master
       target: grin_node_master
     container_name: grin-node-testnet-master-container
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-X",  "POST", "grin-node-testnet-master-container:13413/v2/owner", "-u", "grin:`cat /home/grinuser/.grin/test/.api_secret`", "-d", '{"jsonrpc": "2.0", "method": "get_status", "params": [], "id": 1}']
+      interval: 5s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
     networks:
       - grin-testnet-network
     image: grin-node-testnet-master
@@ -24,6 +30,7 @@ services:
 
 volumes:
   grin-home-testnet-master:
+    name: grin-home-testnet-master
 
 networks:
   grin-testnet-network:

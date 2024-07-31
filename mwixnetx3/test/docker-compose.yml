@@ -1,0 +1,35 @@
+services:
+  grin-node-testnet-master:
+    extends:
+      file: ../../node/test/docker-compose.yml
+      service: grin-node-testnet-master
+  grin-wallet-testnet-contracts:
+    extends:
+      file: ../../wallet/test/contracts/docker-compose.yml
+      service: grin-wallet-testnet-contracts
+    depends_on:
+      grin-node-testnet-master:
+        condition: service_healthy
+  grin-olivetin-test:
+    extends:
+      file: ../../monitor/test/docker-compose.yml
+      service: grin-olivetin
+    depends_on:
+      grin-wallet-testnet-contracts:
+        condition: service_healthy
+  grin-mwixnet-testnet-node-1:
+    extends:
+      file: ../../mwixnet/test/docker-compose.yml
+      service: grin-mwixnet-testnet
+    depends_on:
+      grin-wallet-testnet-contracts:
+        condition: service_healthy
+
+volumes:
+  grin-home-testnet-master:
+  grin-wallet-home-testnet-contracts:
+  grin-mwixnet-home-testnet-master:
+
+networks:
+  grin-testnet-network:
+    name: grin_testnet_network
