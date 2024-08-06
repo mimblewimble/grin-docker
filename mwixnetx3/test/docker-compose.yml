@@ -10,6 +10,46 @@ services:
     depends_on:
       grin-node-testnet-master:
         condition: service_healthy
+  grin-wallet-testnet-contracts-2:
+    extends:
+      file: ../../wallet/test/contracts/docker-compose.yml
+      service: grin-wallet-testnet-contracts
+    container_name: grin-wallet-testnet-contracts-container-2 
+    volumes: 
+      - grin-wallet-home-testnet-contracts-2:/home/grinuser
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-X",  "POST", "grin-wallet-testnet-contracts-container-2:13415/v2/foreign", "-u", "grin:`cat /home/grinuser/.grin/test/.api_secret`", "-d", '{"jsonrpc": "2.0", "method": "check_version", "params": {}, "id": 1}']
+      interval: 5s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    expose:
+      - "23415"
+    ports: !override
+      - "23415:13415"
+    depends_on:
+      grin-node-testnet-master:
+        condition: service_healthy
+  grin-wallet-testnet-contracts-3:
+    extends:
+      file: ../../wallet/test/contracts/docker-compose.yml
+      service: grin-wallet-testnet-contracts
+    container_name: grin-wallet-testnet-contracts-container-3 
+    volumes: 
+      - grin-wallet-home-testnet-contracts-2:/home/grinuser
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-X",  "POST", "grin-wallet-testnet-contracts-container-3:13415/v2/foreign", "-u", "grin:`cat /home/grinuser/.grin/test/.api_secret`", "-d", '{"jsonrpc": "2.0", "method": "check_version", "params": {}, "id": 1}']
+      interval: 5s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    expose:
+      - "33415"
+    ports: !override
+      - "33415:13415"
+    depends_on:
+      grin-node-testnet-master:
+        condition: service_healthy
   grin-olivetin-test:
     extends:
       file: ../../monitor/test/docker-compose.yml
@@ -24,11 +64,36 @@ services:
     depends_on:
       grin-wallet-testnet-contracts:
         condition: service_healthy
+  grin-mwixnet-testnet-node-2:
+    extends:
+      file: ../../mwixnet/test/docker-compose.yml
+      service: grin-mwixnet-testnet
+    container_name: grin_test_mwixnet_container_2
+    environment:
+      - WALLET_OWNER_URL=grin-wallet-testnet-contracts-container-2:13415
+    volumes:
+      - grin-mwixnet-home-testnet-master-2:/home/grinuser
+    depends_on:
+      grin-wallet-testnet-contracts-2:
+        condition: service_healthy
+  #grin-mwixnet-testnet-node-3:
+  #  extends:
+  #    file: ../../mwixnet/test/docker-compose.yml
+  #    service: grin-mwixnet-testnet
+  #  container_name: grin_test_mwixnet_container_3
+  #  volumes:
+  #    - grin-mwixnet-home-testnet-master-3:/home/grinuser
+  #  depends_on:
+  #    grin-wallet-testnet-contracts:
+  #      condition: service_healthy
 
 volumes:
   grin-home-testnet-master:
   grin-wallet-home-testnet-contracts:
+  grin-wallet-home-testnet-contracts-2:
   grin-mwixnet-home-testnet-master:
+  grin-mwixnet-home-testnet-master-2:
+  grin-mwixnet-home-testnet-master-3:
 
 networks:
   grin-testnet-network:

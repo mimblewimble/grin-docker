@@ -31,7 +31,7 @@ USER grinuser
 RUN mkdir -p /home/grinuser/.grin/main
 RUN mkdir -p /home/grinuser/.grin/test
 WORKDIR /home/grinuser
-ENTRYPOINT ["/usr/bin/grin-wallet"]
+ENTRYPOINT ["/home/grinuser/wallet-first-run.sh"]
 
 FROM grin_wallet_build as grin_wallet_master
 WORKDIR /usr/src/grin-wallet
@@ -44,4 +44,4 @@ USER grinuser
 RUN mkdir -p /home/grinuser/.grin/main
 RUN mkdir -p /home/grinuser/.grin/test
 WORKDIR /home/grinuser
-ENTRYPOINT ["/usr/bin/grin-wallet"]
+ENTRYPOINT ["/home/grinuser/wallet-first-run.sh"]

@@ -15,14 +15,16 @@ services:
     networks:
       - grin-testnet-network
     image: grin-wallet-testnet-contracts
-    command: ["--testnet", "owner_api", "--run_foreign"]
     environment:
       - RUST_BACKTRACE=1
+      - WALLET_PASSWORD=1
+      - GRIN_CHAIN_TYPE=test
     expose:
       - "13415"
     ports:
       - "13415:13415"
     volumes:
+      - ../../scripts/wallet-first-run.sh:/home/grinuser/wallet-first-run.sh
       - ../../configs/testnet/grin-wallet.toml:/home/grinuser/.grin/test/grin-wallet.toml
       - grin-wallet-home-testnet-contracts:/home/grinuser
       - grin-home-testnet-master:/grin-node-home
