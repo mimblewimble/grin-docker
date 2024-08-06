@@ -6,14 +6,14 @@ if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
     echo "-- First container startup --"
     if [ $GRIN_CHAIN_TYPE == "test" ];
     then
-        echo $WALLET_PASSWORD | echo $WALLET_PASSWORD |  RUST_BACKTRACE=full grin-wallet --testnet init 
+        RUST_BACKTRACE=full grin-wallet --testnet init 
     else
-        echo $WALLET_PASSWORD | echo $WALLET_PASSWORD |  grin-wallet init 
+        grin-wallet init 
     fi
 fi
 
 if [ $GRIN_CHAIN_TYPE == "test" ]; then
-    RUST_BACKTRACE=full grin-wallet --testnet owner_api --run-foreign
+    RUST_BACKTRACE=full grin-wallet --testnet owner_api --run_foreign
 else
-    grin-wallet owner_api --run-foreign
+    grin-wallet owner_api --run_foreign
 fi
