@@ -28,8 +28,8 @@ LABEL maintainer="yeastplume" description="Grin Wallet - Build from contracts br
 RUN cp /usr/src/grin-wallet/target/release/grin-wallet /usr/bin/grin-wallet
 RUN useradd -m grinuser
 USER grinuser
-RUN mkdir -p /home/grinuser/.grin/main
-RUN mkdir -p /home/grinuser/.grin/test
+#RUN mkdir -p /home/grinuser/.grin/main
+#RUN mkdir -p /home/grinuser/.grin/test
 WORKDIR /home/grinuser
 ENTRYPOINT ["/home/grinuser/wallet-first-run.sh"]
 
@@ -41,7 +41,7 @@ LABEL maintainer="yeastplume" description="Grin Wallet - Build from master"
 RUN cp /usr/src/grin-wallet/target/release/grin-wallet /usr/bin/grin-wallet
 RUN useradd -m grinuser
 USER grinuser
-RUN mkdir -p /home/grinuser/.grin/main
-RUN mkdir -p /home/grinuser/.grin/test
+#RUN mkdir -p /home/grinuser/.grin/main
+#RUN mkdir -p /home/grinuser/.grin/test
 WORKDIR /home/grinuser
 ENTRYPOINT ["/home/grinuser/wallet-first-run.sh"]

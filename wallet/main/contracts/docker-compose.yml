@@ -12,12 +12,17 @@ services:
     command: ["owner_api", "--run_foreign"]
     environment:
       - RUST_BACKTRACE=1
+      - GRIN_CHAIN_TYPE="Testnet"
+      - OWNER_API_LISTEN_INTERFACE="0.0.0.0"
+      - WALLET_API_LISTEN_PORT=13415
+      - OWNER_API_LISTEN_PORT=13415
+      - NODE_API_SECRET_PATH="/grin-node-home/.grin/test/.foreign_api_secret"
+      - NODE_API_HTTP_ADDR="http://grin-node-testnet-master-container:13413"
     expose:
       - "3415"
     ports:
       - "3415:3415"
     volumes:
-      - ../../configs/mainnet/grin-wallet.toml:/home/grinuser/.grin/main/grin-wallet.toml
       - grin-wallet-home-mainnet-contracts:/home/grinuser
       - main_grin-home-mainnet-master:/grin-node-home
 
