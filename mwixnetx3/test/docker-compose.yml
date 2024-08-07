@@ -15,6 +15,9 @@ services:
       file: ../../wallet/test/contracts/docker-compose.yml
       service: grin-wallet-testnet-contracts
     container_name: grin-wallet-testnet-contracts-container-2 
+    environment:
+      - WALLET_API_LISTEN_PORT=23415
+      - OWNER_API_LISTEN_PORT=23415
     volumes: 
       - grin-wallet-home-testnet-contracts-2:/home/grinuser
     healthcheck:
@@ -30,52 +33,55 @@ services:
     depends_on:
       grin-node-testnet-master:
         condition: service_healthy
-  #grin-wallet-testnet-contracts-3:
-  #  extends:
-  #    file: ../../wallet/test/contracts/docker-compose.yml
-  #    service: grin-wallet-testnet-contracts
-  #  container_name: grin-wallet-testnet-contracts-container-3 
-  #  volumes: 
-  #    - grin-wallet-home-testnet-contracts-3:/home/grinuser
-  #  healthcheck:
-  #    test: ["CMD", "curl", "-s", "-X",  "POST", "grin-wallet-testnet-contracts-container-3:13415/v2/foreign", "-u", "grin:`cat /home/grinuser/.grin/test/.api_secret`", "-d", '{"jsonrpc": "2.0", "method": "check_version", "params": {}, "id": 1}']
-  #    interval: 5s
-  #    retries: 5
-  #    start_period: 30s
-  #    timeout: 5s
-  #  expose:
-  #    - "33415"
-  #  ports: !override
-  #    - "33415:13415"
-  #  depends_on:
-  #    grin-node-testnet-master:
-  #      condition: service_healthy
-  grin-olivetin-test:
+  grin-wallet-testnet-contracts-3:
     extends:
-      file: ../../monitor/test/docker-compose.yml
-      service: grin-olivetin
-    depends_on:
-      grin-wallet-testnet-contracts:
-        condition: service_healthy
-  grin-mwixnet-testnet-node-1:
-    extends:
-      file: ../../mwixnet/test/docker-compose.yml
-      service: grin-mwixnet-testnet
-    depends_on:
-      grin-wallet-testnet-contracts:
-        condition: service_healthy
-  grin-mwixnet-testnet-node-2:
-    extends:
-      file: ../../mwixnet/test/docker-compose.yml
-      service: grin-mwixnet-testnet
-    container_name: grin_test_mwixnet_container_2
+      file: ../../wallet/test/contracts/docker-compose.yml
+      service: grin-wallet-testnet-contracts
+    container_name: grin-wallet-testnet-contracts-container-3 
     environment:
-      - WALLET_OWNER_URL=grin-wallet-testnet-contracts-container-2:13415
-    volumes:
-      - grin-mwixnet-home-testnet-master-2:/home/grinuser
+      - WALLET_API_LISTEN_PORT=33415
+      - OWNER_API_LISTEN_PORT=33415
+    volumes: 
+      - grin-wallet-home-testnet-contracts-3:/home/grinuser
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-X",  "POST", "grin-wallet-testnet-contracts-container-3:13415/v2/foreign", "-u", "grin:`cat /home/grinuser/.grin/test/.api_secret`", "-d", '{"jsonrpc": "2.0", "method": "check_version", "params": {}, "id": 1}']
+      interval: 5s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    expose:
+      - "33415"
+    ports: !override
+      - "33415:13415"
     depends_on:
-      grin-wallet-testnet-contracts-2:
+      grin-node-testnet-master:
         condition: service_healthy
+  #grin-olivetin-test:
+  #  extends:
+  #    file: ../../monitor/test/docker-compose.yml
+  #    service: grin-olivetin
+  #  depends_on:
+  #    grin-wallet-testnet-contracts:
+  #      condition: service_healthy
+  #grin-mwixnet-testnet-node-1:
+  #  extends:
+  #    file: ../../mwixnet/test/docker-compose.yml
+  #    service: grin-mwixnet-testnet
+  #  depends_on:
+  #    grin-wallet-testnet-contracts:
+  #      condition: service_healthy
+  #grin-mwixnet-testnet-node-2:
+  #  extends:
+  #    file: ../../mwixnet/test/docker-compose.yml
+  #    service: grin-mwixnet-testnet
+  #  container_name: grin_test_mwixnet_container_2
+  #  environment:
+  #    - WALLET_OWNER_URL=grin-wallet-testnet-contracts-container-2:13415
+  #  volumes:
+  #    - grin-mwixnet-home-testnet-master-2:/home/grinuser
+  #  depends_on:
+  #    grin-wallet-testnet-contracts-2:
+  #      condition: service_healthy
   #grin-mwixnet-testnet-node-3:
   #  extends:
   #    file: ../../mwixnet/test/docker-compose.yml
@@ -89,9 +95,13 @@ services:
 
 volumes:
   grin-home-testnet-master:
+    name: grin-home-testnet-master
   grin-wallet-home-testnet-contracts:
+    name: grin-wallet-home-testnet-contracts
   grin-wallet-home-testnet-contracts-2:
+    name: grin-wallet-home-testnet-contracts-2
   grin-wallet-home-testnet-contracts-3:
+    name: grin-wallet-home-testnet-contracts-3
   grin-mwixnet-home-testnet-master:
   grin-mwixnet-home-testnet-master-2:
   grin-mwixnet-home-testnet-master-3:
