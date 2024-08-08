@@ -14,7 +14,7 @@ services:
       - GRIN_CHAIN_TYPE=test
       - GRIN_NODE_URL=grin-node-testnet-master-container:13413
       - WALLET_OWNER_URL=grin-wallet-testnet-contracts-container:13415
-      - WALLET_PASSWORD=1
+      - WALLET_PASSWORD=
     expose:
       - "3000"
     ports:
