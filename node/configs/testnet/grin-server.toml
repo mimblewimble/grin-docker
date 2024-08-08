@@ -227,13 +227,13 @@ timeout = 10
 log_to_stdout = true
 
 #log level for stdout: Error, Warning, Info, Debug, Trace
-stdout_log_level = "Info"
+stdout_log_level = "Debug"
 
 #whether to log to a file
 log_to_file = true
 
 #log level for file: Error, Warning, Info, Debug, Trace
-file_log_level = "Info"
+file_log_level = "Debug"
 
 #log file path
 log_file_path = "/home/grinuser/.grin/test/grin-server.log"

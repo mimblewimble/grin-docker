@@ -1,0 +1,66 @@
+actions:
+  - title: Node Sync Status
+    popupOnStart: execution-dialog-stdout-only
+    shell: /etc/OliveTin/json-rpc/node/execute_get_status.sh
+    icon: ping
+    timeout: 5
+
+  - title: Get Block
+    popupOnStart: execution-dialog-stdout-only
+    shell: /etc/OliveTin/json-rpc/node/execute_get_block.sh
+    icon: ping
+    timeout: 5
+    arguments:
+      - name: block_number
+        type: ascii_sentence
+        description: Block Number
+        
+  - title: Get Outputs
+    popupOnStart: execution-dialog-stdout-only
+    shell: /etc/OliveTin/json-rpc/node/execute_get_outputs.sh
+    icon: ping
+    timeout: 5
+    arguments:
+      - name: commits
+        type:  very_dangerous_raw_string
+        description: Commits
+  - title: Wallet Summary Info
+    popupOnStart: execution-dialog-stdout-only
+    shell: node /etc/OliveTin/owner_api_client/src/wallet_info.js
+    arguments:
+      - name: OWNER_API_ADDRESS
+        choices:
+          - title: Wallet 1
+            value: grin-wallet-testnet-contracts-container:13415
+          - title: Wallet 2
+            value: grin-wallet-testnet-contracts-container-2:23415
+          - title: Wallet 3
+            value: grin-wallet-testnet-contracts-container-3:33415
+  - title: Wallet Txs
+    popupOnStart: execution-dialog-stdout-only
+    shell: node /etc/OliveTin/owner_api_client/src/wallet_txs.js
+    arguments:
+      - name: OWNER_API_ADDRESS
+        choices:
+          - title: Wallet 1
+            value: grin-wallet-testnet-contracts-container:13415
+          - title: Wallet 2
+            value: grin-wallet-testnet-contracts-container-2:23415
+          - title: Wallet 3
+            value: grin-wallet-testnet-contracts-container-3:33415
+ 
+dashboards:
+  - title: All Processes
+    type: fieldset
+    contents:
+      - title: Grin Node
+        type: fieldset
+        contents:
+        - title: Node Sync Status
+        - title: Get Block
+        - title: Get Outputs
+      - title: Grin Wallet(s) x 3
+        type: fieldset
+        contents:
+        - title: Wallet Summary Info
+        - title: Wallet Txs

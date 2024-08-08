@@ -1,12 +1,11 @@
 const ownerClient = require('./owner_api_client.js');
 
 // read value of env var OWNER_API_PORT or default to 3415
-const port = process.env.OWNER_API_PORT || 3415;
-const password = process.env.WALLET_PASSWORD || 'password';
-const host = process.env.OWNER_API_HOST || 'host.docker.internal';
+const address = process.env.OWNER_API_ADDRESS || 'host.docker.internal:3415';
+const password = process.env.WALLET_PASSWORD || '';
 
 async function main() {
-	ownerClient.initClient('http://' + host + ':' + port + '/v3/owner');
+	ownerClient.initClient('http://' + address + '/v3/owner');
 	let shared_key = await ownerClient.initSecure();
 
 	let token = await ownerClient.openWallet(password, shared_key);

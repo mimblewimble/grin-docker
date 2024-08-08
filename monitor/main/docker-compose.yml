@@ -12,8 +12,7 @@ services:
       - PORT=1337
       - NODE_API_ADDR=grin-node-mainnet-master-container:3413
       - NODE_CHAIN_TYPE=main
-      - OWNER_API_PORT=3415
-      - OWNER_API_HOST=grin-wallet-mainnet-contracts-container
+      - OWNER_API_ADDRESS=grin-wallet-testnet-contracts-container:3415
     volumes:
       - ../config/combined.yaml:/etc/OliveTin/config.yaml
       - ../json-rpc/node:/etc/OliveTin/json-rpc/node
