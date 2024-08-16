@@ -1,6 +1,6 @@
 # Grin Docker images
 
-(Internal developer documentation for now)
+## Please note that these images are currently leaving wallet and mwixnet passwords blank, and it's not yet advised to use these images for production nodes. (This should be addressed in a future update)
 
 # Build and testing
 
@@ -15,6 +15,8 @@ The list of directories below contain a *docker-compose.yml* to build you docker
 `wallet/main/contracts` -> Builds and deploys a mainnet wallet communicating with a node deployed by `node/main`
 `monitor/main` -> Build and deploys an monitor node based on OliveTin allowing user to run node commands via a web gui
 `monitor/test` -> As above, but against testnet.
+`mwixnet/test` -> Runs an mwixnet node against a node and wallet
+`mwixnetx3/test` -> Runs a testnet node, three wallets, three linked mwixnet nodes and a monitor for testing
 
 Images are in the middle of being updated to 'modern Grin' (5.4.0+), and currently working compose files are:
 For now, a typical workflow would be:
