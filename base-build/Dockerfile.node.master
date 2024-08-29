@@ -13,7 +13,8 @@ RUN apt-get update && apt-get -y install cmake clang curl
 #RUN apt-get -y install libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 #checkout source fresh and build
 WORKDIR /usr/src
-RUN git clone https://github.com/mimblewimble/grin.git
+RUN git clone https://github.com/yeastplume/grin.git
+RUN git checkout cursive_update
 WORKDIR /usr/src/grin
 RUN cargo build --release
 
